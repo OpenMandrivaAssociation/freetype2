@@ -15,11 +15,12 @@
 Name:		%name
 Summary:	A free and portable TrueType font rendering engine
 Version:	%version
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	FreeType License/GPL
 URL:		http://www.freetype.org/
 Source0:	ftp://ftp.freetype.org/pub/freetype/freetype2/freetype-%{version}.tar.bz2
 Source1:	ftp://ftp.freetype.org/pub/freetype/freetype2/freetype-doc-%{version}.tar.bz2
+Patch0:         freetype-CVE-2007-1351.patch
 
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:	zlib-devel
@@ -85,6 +86,7 @@ freetype2 package installed.
 
 %prep
 %setup -q -n freetype-%version -b 1
+%patch0 -p1 -b .cve-2007-1351
 
 %if %{build_plf}
 perl -pi -e 's|/\* #define TT_CONFIG_OPTION_BYTECODE_INTERPRETER \*/|#define TT_CONFIG_OPTION_BYTECODE_INTERPRETER|' include/freetype/config/ftoption.h
