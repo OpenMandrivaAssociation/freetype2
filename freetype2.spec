@@ -39,8 +39,8 @@ platforms and environments. Note that FreeType2 is a library, not a
 stand-alone application, though some utility applications are included
 %if %{build_plf}
 
-This package is in PLF because this build has bytecode interpreter enabled
-which is covered by a software patent.
+This package is in PLF because this build has bytecode interpreter and
+subpixel hinting enabled which are covered by software patents.
 %endif
 
 %package -n %{libname}
@@ -57,8 +57,8 @@ library, not a stand-alone application, though some utility
 applications are included
 %if %{build_plf}
 
-This package is in PLF because this build has bytecode interpreter enabled
-which is covered by a software patent.
+This package is in PLF because this build has bytecode interpreter and
+subpixel hinting enabled which are covered by software patents.
 %endif
 
 %package -n %{libname}-devel
