@@ -1,12 +1,18 @@
+%define build_bytecode_interpreter 0
+%define build_subpixel 0
 %define build_plf 0
 %{?_with_plf: %global build_plf 1}
+%{?_with_bytecode_interpreter: %global build_bytecode_interpreter 1}
+%{?_with_subpixel: %global build_subpixel 1}
 
 %define name	freetype2
-%define	version	2.3.1
+%define	version	2.3.4
 
 
-%if %{build_plf}
+%if %build_plf
 %define distsuffix plf
+%define build_subpixel 1
+%define build_bytecode_interpreter 1
 %endif
 
 %define major	6
@@ -15,12 +21,11 @@
 Name:		%name
 Summary:	A free and portable TrueType font rendering engine
 Version:	%version
-Release:	%mkrel 4
+Release:	%mkrel 1
 License:	FreeType License/GPL
 URL:		http://www.freetype.org/
 Source0:	ftp://ftp.freetype.org/pub/freetype/freetype2/freetype-%{version}.tar.bz2
 Source1:	ftp://ftp.freetype.org/pub/freetype/freetype2/freetype-doc-%{version}.tar.bz2
-Patch0:         freetype-CVE-2007-1351.patch
 
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:	zlib-devel
@@ -86,13 +91,14 @@ freetype2 package installed.
 
 %prep
 %setup -q -n freetype-%version -b 1
-%patch0 -p1 -b .cve-2007-1351
 
-%if %{build_plf}
+%if %{build_bytecode_interpreter}
 perl -pi -e 's|/\* #define TT_CONFIG_OPTION_BYTECODE_INTERPRETER \*/|#define TT_CONFIG_OPTION_BYTECODE_INTERPRETER|' include/freetype/config/ftoption.h
-perl -pi -e 's|^/\* #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING \*/| #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING|' include/freetype/config/ftoption.h
-
 %endif
+%if %{build_subpixel}
+perl -pi -e 's|^/\* #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING \*/| #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING|' include/freetype/config/ftoption.h
+%endif
+
 
 %build
 %{?__cputoolize: %{__cputoolize} -c builds/unix}
