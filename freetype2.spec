@@ -6,7 +6,7 @@
 %{?_with_subpixel: %global build_subpixel 1}
 
 %define name	freetype2
-%define	version	2.3.4
+%define	version	2.3.5
 
 
 %if %build_plf
@@ -17,6 +17,8 @@
 
 %define major	6
 %define libname	%mklibname freetype %{major}
+%define develname %mklibname -d freetype %{major}
+%define staticdevelname %mklibname -d -s freetype %{major}
 
 Name:		%name
 Summary:	A free and portable TrueType font rendering engine
@@ -61,7 +63,7 @@ This package is in PLF because this build has bytecode interpreter and
 subpixel hinting enabled which are covered by software patents.
 %endif
 
-%package -n %{libname}-devel
+%package -n %{develname}
 Summary:	Header files and static library for development with FreeType2
 Group:		Development/C
 Requires:	%{libname} = %{version}
@@ -69,19 +71,19 @@ Requires:	zlib-devel
 Obsoletes:	%{name}-devel
 Provides:	%{name}-devel = %{version}-%{release}
 
-%description -n %{libname}-devel
+%description -n %{develname}
 This package is only needed if you intend to develop or compile applications
 which rely on the FreeType2 library. If you simply want to run existing
 applications, you won't need this package.
 
-%package -n %{libname}-static-devel
+%package -n %{staticdevelname}
 Summary:	Static libraries for programs which will use the FreeType2 library
 Group:		Development/C
 Requires:	%{libname}-devel = %{version}
 Obsoletes:	%{name}-static-devel
 Provides:	%{name}-static-devel = %{version}-%{release}
 
-%description -n %{libname}-static-devel
+%description -n %{staticdevelname}
 This package includes the static libraries necessary for 
 developing programs which will use the FreeType2 library.
 
@@ -134,7 +136,7 @@ rm -fr %buildroot
 %defattr(-, root, root)
 %{_libdir}/*.so.%{major}*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(-, root, root)
 %doc docs/*
 %{_bindir}/freetype-config
@@ -149,8 +151,6 @@ rm -fr %buildroot
 %multiarch %dir %multiarch_includedir/freetype2
 %multiarch %multiarch_includedir/freetype2/*
 
-%files -n %{libname}-static-devel
+%files -n %{staticdevelname}
 %defattr(-, root, root)
 %{_libdir}/*.a
-
-
