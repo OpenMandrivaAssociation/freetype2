@@ -6,7 +6,7 @@
 %{?_with_subpixel: %global build_subpixel 1}
 
 %define name	freetype2
-%define	version	2.3.5
+%define	version	2.3.6
 
 
 %if %build_plf
@@ -23,7 +23,7 @@
 Name:		%name
 Summary:	A free and portable TrueType font rendering engine
 Version:	%version
-Release:	%mkrel 2
+Release:	%mkrel 1
 License:	FreeType License/GPL
 URL:		http://www.freetype.org/
 Source0:	ftp://ftp.freetype.org/pub/freetype/freetype2/freetype-%{version}.tar.bz2
