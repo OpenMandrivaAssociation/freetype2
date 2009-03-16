@@ -20,6 +20,8 @@
 %define develname %mklibname -d freetype %{major}
 %define staticdevelname %mklibname -d -s freetype %{major}
 
+%define git_url git://git.sv.gnu.org/freetype/freetype2.git
+
 Name:		%name
 Summary:	A free and portable TrueType font rendering engine
 Version:	%version
