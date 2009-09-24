@@ -25,7 +25,7 @@
 Name:		%name
 Summary:	A free and portable TrueType font rendering engine
 Version:	%version
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	FreeType License/GPL
 URL:		http://www.freetype.org/
 Source0:	ftp://ftp.freetype.org/pub/freetype/freetype2/freetype-%{version}.tar.bz2
