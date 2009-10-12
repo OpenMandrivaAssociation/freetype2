@@ -6,7 +6,7 @@
 %{?_with_subpixel: %global build_subpixel 1}
 
 %define name	freetype2
-%define	version	2.3.10
+%define	version	2.3.11
 
 
 %if %build_plf
