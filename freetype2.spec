@@ -25,7 +25,7 @@
 Name:		%name
 Summary:	A free and portable TrueType font rendering engine
 Version:	%version
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	FreeType License/GPL
 URL:		http://www.freetype.org/
 Source0:	ftp://ftp.freetype.org/pub/freetype/freetype2/freetype-%{version}.tar.bz2
@@ -105,7 +105,6 @@ perl -pi -e 's|^/\* #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING \*/| #define FT_
 
 
 %build
-%{?__cputoolize: %{__cputoolize} -c builds/unix}
 
 GCC_VERSION=`gcc --version | grep "^gcc" | awk '{ print $3 }' | sed 's+\([0-9]\)\.\([0-9]\)\..*+\1\2+'`
 if [ $GCC_VERSION -lt 34 ]; then
