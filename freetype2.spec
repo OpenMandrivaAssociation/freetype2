@@ -28,8 +28,8 @@ Version:	%version
 Release:	%mkrel 2
 License:	FreeType License/GPL
 URL:		http://www.freetype.org/
-Source0:	ftp://ftp.freetype.org/pub/freetype/freetype2/freetype-%{version}.tar.bz2
-Source1:	ftp://ftp.freetype.org/pub/freetype/freetype2/freetype-doc-%{version}.tar.bz2
+Source0:	http://savannah.nongnu.org/download/freetype/freetype-%{version}.tar.bz2
+Source1:	http://savannah.nongnu.org/download/freetype/freetype-doc-%{version}.tar.bz2
 
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:	zlib-devel
