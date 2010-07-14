@@ -41,7 +41,7 @@ stand-alone application, though some utility applications are included
 %if %{build_plf}
 
 This package is in PLF because this build has subpixel hinting enabled which
-are covered by software patents.
+is covered by software patents.
 %endif
 
 %package -n %{libname}
@@ -59,7 +59,7 @@ applications are included
 %if %{build_plf}
 
 This package is in PLF because this build has subpixel hinting enabled which
-are covered by software patents.
+is covered by software patents.
 %endif
 
 %package -n %{develname}
