@@ -1,18 +1,15 @@
-%define build_bytecode_interpreter 0
 %define build_subpixel 0
 %define build_plf 0
 %{?_with_plf: %global build_plf 1}
-%{?_with_bytecode_interpreter: %global build_bytecode_interpreter 1}
 %{?_with_subpixel: %global build_subpixel 1}
 
 %define name	freetype2
-%define	version	2.3.12
+%define	version	2.4.0
 
 
 %if %build_plf
 %define distsuffix plf
 %define build_subpixel 1
-%define build_bytecode_interpreter 1
 %endif
 
 %define major	6
@@ -43,8 +40,8 @@ platforms and environments. Note that FreeType2 is a library, not a
 stand-alone application, though some utility applications are included
 %if %{build_plf}
 
-This package is in PLF because this build has bytecode interpreter and
-subpixel hinting enabled which are covered by software patents.
+This package is in PLF because this build has subpixel hinting enabled which
+are covered by software patents.
 %endif
 
 %package -n %{libname}
@@ -61,8 +58,8 @@ library, not a stand-alone application, though some utility
 applications are included
 %if %{build_plf}
 
-This package is in PLF because this build has bytecode interpreter and
-subpixel hinting enabled which are covered by software patents.
+This package is in PLF because this build has subpixel hinting enabled which
+are covered by software patents.
 %endif
 
 %package -n %{develname}
@@ -96,9 +93,6 @@ freetype2 package installed.
 %prep
 %setup -q -n freetype-%version -b 1
 
-%if %{build_bytecode_interpreter}
-perl -pi -e 's|/\* #define TT_CONFIG_OPTION_BYTECODE_INTERPRETER \*/|#define TT_CONFIG_OPTION_BYTECODE_INTERPRETER|' include/freetype/config/ftoption.h
-%endif
 %if %{build_subpixel}
 perl -pi -e 's|^/\* #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING \*/| #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING|' include/freetype/config/ftoption.h
 %endif
