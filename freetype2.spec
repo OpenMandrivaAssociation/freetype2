@@ -32,6 +32,7 @@ Patch0:		ft2demos-2.3.12-mathlib.diff
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:	zlib-devel
 BuildRequires:	pkgconfig
+BuildRequires:	libx11-devel
 Group:		System/Libraries
 
 %description
