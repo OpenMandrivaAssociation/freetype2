@@ -22,12 +22,13 @@
 Name:		%name
 Summary:	A free and portable TrueType font rendering engine
 Version:	%version
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	FreeType License/GPL
 URL:		http://www.freetype.org/
 Source0:	http://savannah.nongnu.org/download/freetype/freetype-%{version}.tar.bz2
 Source1:	http://savannah.nongnu.org/download/freetype/freetype-doc-%{version}.tar.bz2
-
+Source2:	http://savannah.nongnu.org/download/freetype/ft2demos-%{version}.tar.gz
+Patch0:		ft2demos-2.3.12-mathlib.diff
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:	zlib-devel
 BuildRequires:	pkgconfig
@@ -90,13 +91,26 @@ If you are going to develop programs which use the FreeType2 library
 you should install freetype2-devel.  You'll also need to have the 
 freetype2 package installed.
 
+%package demos
+Summary:	A collection of FreeType demos
+Group:		File tools
+
+%description demos
+The FreeType engine is a free and portable font rendering engine, developed to
+provide advanced font support for a variety of platforms and environments. The
+demos package includes a set of useful small utilities showing various
+capabilities of the FreeType library.
+
 %prep
-%setup -q -n freetype-%version -b 1
+%setup -q -n freetype-%version -b 1 -a2
+
+pushd ft2demos-%{version}
+%patch0 -p0
+popd
 
 %if %{build_subpixel}
 perl -pi -e 's|^/\* #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING \*/| #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING|' include/freetype/config/ftoption.h
 %endif
-
 
 %build
 
@@ -114,12 +128,22 @@ export CFLAGS="`echo %optflags |sed s/O2/O0/`"
 %configure2_5x
 %make
 
+pushd ft2demos-%{version}
+%make X11_PATH=%{_prefix} TOP_DIR=".."
+popd
+
 %install
 rm -fr %buildroot
 %makeinstall
 
 %multiarch_binaries $RPM_BUILD_ROOT%{_bindir}/freetype-config
 %multiarch_includes $RPM_BUILD_ROOT%{_includedir}/freetype2/freetype/config/ftconfig.h
+
+install -d $RPM_BUILD_ROOT/%{_bindir}
+
+for ftdemo in ftbench ftdiff ftdump ftgamma ftgrid ftlint ftmulti ftstring ftvalid ftview; do
+    builds/unix/libtool --mode=install install -m 755 ft2demos-%{version}/bin/$ftdemo $RPM_BUILD_ROOT/%{_bindir}
+done
 
 %clean
 rm -fr %buildroot
@@ -153,3 +177,16 @@ rm -fr %buildroot
 %files -n %{staticdevelname}
 %defattr(-, root, root)
 %{_libdir}/*.a
+
+%files demos
+%defattr(-,root,root)
+%{_bindir}/ftbench
+%{_bindir}/ftdiff
+%{_bindir}/ftdump
+%{_bindir}/ftgamma
+%{_bindir}/ftgrid
+%{_bindir}/ftlint
+%{_bindir}/ftmulti
+%{_bindir}/ftstring
+%{_bindir}/ftvalid
+%{_bindir}/ftview
