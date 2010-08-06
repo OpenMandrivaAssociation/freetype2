@@ -4,7 +4,7 @@
 %{?_with_subpixel: %global build_subpixel 1}
 
 %define name	freetype2
-%define	version	2.4.1
+%define	version	2.4.2
 
 
 %if %build_plf
@@ -27,7 +27,7 @@ License:	FreeType License/GPL
 URL:		http://www.freetype.org/
 Source0:	http://savannah.nongnu.org/download/freetype/freetype-%{version}.tar.bz2
 Source1:	http://savannah.nongnu.org/download/freetype/freetype-doc-%{version}.tar.bz2
-Source2:	http://savannah.nongnu.org/download/freetype/ft2demos-%{version}.tar.gz
+Source2:	http://savannah.nongnu.org/download/freetype/ft2demos-%{version}.tar.bz2
 Patch0:		ft2demos-2.3.12-mathlib.diff
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:	zlib-devel
