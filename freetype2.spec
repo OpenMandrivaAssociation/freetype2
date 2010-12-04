@@ -4,7 +4,7 @@
 %{?_with_subpixel: %global build_subpixel 1}
 
 %define name	freetype2
-%define	version	2.4.3
+%define	version	2.4.4
 
 
 %if %build_plf
@@ -22,7 +22,7 @@
 Name:		%name
 Summary:	A free and portable TrueType font rendering engine
 Version:	%version
-Release:	%mkrel 3
+Release:	%mkrel 1
 License:	FreeType License/GPL
 URL:		http://www.freetype.org/
 Source0:	http://savannah.nongnu.org/download/freetype/freetype-%{version}.tar.bz2
@@ -30,8 +30,6 @@ Source1:	http://savannah.nongnu.org/download/freetype/freetype-doc-%{version}.ta
 Source2:	http://savannah.nongnu.org/download/freetype/ft2demos-%{version}.tar.bz2
 Patch0:		ft2demos-2.3.12-mathlib.diff
 Patch1:		freetype-2.4.2-CVE-2010-3311.patch
-Patch2:		freetype-2.4.3-CVE-2010-3814.diff
-Patch3:		freetype-2.4.3-CVE-2010-3855.diff
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:	zlib-devel
 BuildRequires:	pkgconfig
@@ -113,8 +111,6 @@ pushd ft2demos-%{version}
 popd
 
 %patch1 -p1 -b .CVE-2010-3311
-%patch2 -p0 -b .CVE-2010-3814
-%patch3 -p0 -b .CVE-2010-3855
 
 %if %{build_subpixel}
 perl -pi -e 's|^/\* #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING \*/| #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING|' include/freetype/config/ftoption.h
