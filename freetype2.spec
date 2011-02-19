@@ -9,6 +9,10 @@
 
 %if %build_plf
 %define distsuffix plf
+%if %mdvver >= 201100
+# make EVR of plf build higher than regular to allow update, needed with rpm5 mkrel
+%define extrarelsuffix plf
+%endif
 %define build_subpixel 1
 %endif
 
@@ -22,7 +26,7 @@
 Name:		%name
 Summary:	A free and portable TrueType font rendering engine
 Version:	%version
-Release:	%mkrel 1
+Release:	%mkrel 1%{?extrarelsuffix}
 License:	FreeType License/GPL
 URL:		http://www.freetype.org/
 Source0:	http://savannah.nongnu.org/download/freetype/freetype-%{version}.tar.bz2
