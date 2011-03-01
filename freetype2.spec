@@ -26,7 +26,7 @@
 Name:		%name
 Summary:	A free and portable TrueType font rendering engine
 Version:	%version
-Release:	%mkrel 1%{?extrarelsuffix}
+Release:	%mkrel 2%{?extrarelsuffix}
 License:	FreeType License/GPL
 URL:		http://www.freetype.org/
 Source0:	http://savannah.nongnu.org/download/freetype/freetype-%{version}.tar.bz2
@@ -34,6 +34,14 @@ Source1:	http://savannah.nongnu.org/download/freetype/freetype-doc-%{version}.ta
 Source2:	http://savannah.nongnu.org/download/freetype/ft2demos-%{version}.tar.bz2
 Patch0:		ft2demos-2.3.12-mathlib.diff
 Patch1:		freetype-2.4.2-CVE-2010-3311.patch
+
+%if %build_plf
+Source3:	http://www.infinality.net/files/infinality-settings
+Source4:	http://www.infinality.net/files/local.conf
+Patch2:		freetype-add-subpixel-hinting-infinality-20101114-1.patch
+Patch3:		freetype-enable-subpixel-hinting-infinality-20100909-1.patch
+%endif
+
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:	zlib-devel
 BuildRequires:	pkgconfig
@@ -115,6 +123,10 @@ pushd ft2demos-%{version}
 popd
 
 %patch1 -p1 -b .CVE-2010-3311
+%if %build_plf
+%patch2 -p1
+%patch3 -p1
+%endif
 
 %if %{build_subpixel}
 perl -pi -e 's|^/\* #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING \*/| #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING|' include/freetype/config/ftoption.h
@@ -153,6 +165,13 @@ for ftdemo in ftbench ftdiff ftdump ftgamma ftgrid ftlint ftmulti ftstring ftval
     builds/unix/libtool --mode=install install -m 755 ft2demos-%{version}/bin/$ftdemo $RPM_BUILD_ROOT/%{_bindir}
 done
 
+%if %build_plf
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/profile.d/
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/fonts
+install -m 755 %SOURCE3 $RPM_BUILD_ROOT%{_sysconfdir}/profile.d/infinality-setting.sh
+install -m 755 %SOURCE4 $RPM_BUILD_ROOT%{_sysconfdir}/fonts/
+%endif
+
 %clean
 rm -fr %buildroot
 
@@ -166,6 +185,10 @@ rm -fr %buildroot
 %files -n %{libname}
 %defattr(-, root, root)
 %{_libdir}/*.so.%{major}*
+%if %build_plf
+%{_sysconfdir}/profile.d/*
+%{_sysconfdir}/fonts/*
+%endif
 
 %files -n %{develname}
 %defattr(-, root, root)
