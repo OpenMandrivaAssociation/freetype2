@@ -143,9 +143,10 @@ popd
 
 %install
 rm -fr %buildroot
-%makeinstall
+%makeinstall_std
 
 %multiarch_binaries $RPM_BUILD_ROOT%{_bindir}/freetype-config
+
 %multiarch_includes $RPM_BUILD_ROOT%{_includedir}/freetype2/freetype/config/ftconfig.h
 
 install -d $RPM_BUILD_ROOT/%{_bindir}
