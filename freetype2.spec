@@ -5,7 +5,7 @@
 
 %define name	freetype2
 %define	version	2.4.6
-
+%define release %mkrel 2
 %if %build_plf
 %define distsuffix plf
 %if %mdvver >= 201100
@@ -25,7 +25,7 @@
 Name:		%name
 Summary:	A free and portable TrueType font rendering engine
 Version:	%version
-Release:	%mkrel 1
+Release:	%{release}%{?extrarelsuffix}
 License:	FreeType License/GPL
 URL:		http://www.freetype.org/
 Source0:	http://savannah.nongnu.org/download/freetype/freetype-%{version}.tar.bz2
