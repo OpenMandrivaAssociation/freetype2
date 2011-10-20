@@ -4,8 +4,8 @@
 %{?_with_subpixel: %global build_subpixel 1}
 
 %define name	freetype2
-%define	version	2.4.6
-%define release %mkrel 2
+%define	version	2.4.7
+%define release %mkrel 1
 %if %build_plf
 %define distsuffix plf
 %if %mdvver >= 201100
@@ -22,9 +22,9 @@
 
 %define git_url git://git.sv.gnu.org/freetype/freetype2.git
 
-Name:		%name
+Name:		%{name}
 Summary:	A free and portable TrueType font rendering engine
-Version:	%version
+Version:	%{version}
 Release:	%{release}%{?extrarelsuffix}
 License:	FreeType License/GPL
 URL:		http://www.freetype.org/
@@ -107,7 +107,7 @@ demos package includes a set of useful small utilities showing various
 capabilities of the FreeType library.
 
 %prep
-%setup -q -n freetype-%version -b 1 -a2
+%setup -q -n freetype-%{version} -b 1 -a2
 
 pushd ft2demos-%{version}
 %patch0 -p0
@@ -129,7 +129,7 @@ fi
 
 # some apps crash on ppc without this
 %ifarch ppc
-export CFLAGS="`echo %optflags |sed s/O2/O0/`"
+export CFLAGS="`echo %{optflags} |sed s/O2/O0/`"
 %endif
 
 %configure2_5x
@@ -140,21 +140,21 @@ pushd ft2demos-%{version}
 popd
 
 %install
-rm -fr %buildroot
+rm -fr %{buildroot}
 %makeinstall_std
 
-%multiarch_binaries $RPM_BUILD_ROOT%{_bindir}/freetype-config
+%multiarch_binaries %{buildroot}%{_bindir}/freetype-config
 
-%multiarch_includes $RPM_BUILD_ROOT%{_includedir}/freetype2/freetype/config/ftconfig.h
+%multiarch_includes %{buildroot}%{_includedir}/freetype2/freetype/config/ftconfig.h
 
-install -d $RPM_BUILD_ROOT/%{_bindir}
+install -d %{buildroot}%{_bindir}
 
 for ftdemo in ftbench ftdiff ftdump ftgamma ftgrid ftlint ftmulti ftstring ftvalid ftview; do
-    builds/unix/libtool --mode=install install -m 755 ft2demos-%{version}/bin/$ftdemo $RPM_BUILD_ROOT/%{_bindir}
+    builds/unix/libtool --mode=install install -m 755 ft2demos-%{version}/bin/$ftdemo %{buildroot}%{_bindir}
 done
 
 %clean
-rm -fr %buildroot
+rm -fr %{buildroot}
 
 %if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
@@ -178,9 +178,9 @@ rm -fr %buildroot
 %{_includedir}/ft2build.h
 %{_datadir}/aclocal/*
 %{_libdir}/pkgconfig/*
-%multiarch_bindir/freetype-config
-%dir %multiarch_includedir/freetype2
-%multiarch_includedir/freetype2/*
+%{multiarch_bindir}/freetype-config
+%dir %{multiarch_includedir}/freetype2
+%{multiarch_includedir}/freetype2/*
 
 %files -n %{staticdevelname}
 %defattr(-, root, root)
