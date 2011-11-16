@@ -3,8 +3,6 @@
 %{?_with_plf: %global build_plf 1}
 %{?_with_subpixel: %global build_subpixel 1}
 
-%define name	freetype2
-%define	version	2.4.7
 %define release %mkrel 1
 %if %build_plf
 %define distsuffix plf
@@ -22,22 +20,25 @@
 
 %define git_url git://git.sv.gnu.org/freetype/freetype2.git
 
-Name:		%{name}
 Summary:	A free and portable TrueType font rendering engine
-Version:	%{version}
+Name:		freetype2
+Version:	2.4.8
 Release:	%{release}%{?extrarelsuffix}
 License:	FreeType License/GPL
+Group:		System/Libraries
 URL:		http://www.freetype.org/
-Source0:	http://savannah.nongnu.org/download/freetype/freetype-%{version}.tar.bz2
-Source1:	http://savannah.nongnu.org/download/freetype/freetype-doc-%{version}.tar.bz2
-Source2:	http://savannah.nongnu.org/download/freetype/ft2demos-%{version}.tar.bz2
+Source0:	http://savannah.nongnu.org/download/freetype/freetype-%{version}.tar.gz
+Source1:	http://savannah.nongnu.org/download/freetype/freetype-%{version}.tar.gz.sig
+Source2:	http://savannah.nongnu.org/download/freetype/freetype-doc-%{version}.tar.gz
+Source3:	http://savannah.nongnu.org/download/freetype/freetype-doc-%{version}.tar.gz.sig
+Source4:	http://savannah.nongnu.org/download/freetype/ft2demos-%{version}.tar.gz
+Source5:	http://savannah.nongnu.org/download/freetype/ft2demos-%{version}.tar.gz.sig
 Patch0:		ft2demos-2.3.12-mathlib.diff
 Patch1:		freetype-2.4.2-CVE-2010-3311.patch
-Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:	zlib-devel
 BuildRequires:	pkgconfig
 BuildRequires:	libx11-devel
-Group:		System/Libraries
+Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 The FreeType2 engine is a free and portable TrueType font rendering engine.
@@ -107,7 +108,7 @@ demos package includes a set of useful small utilities showing various
 capabilities of the FreeType library.
 
 %prep
-%setup -q -n freetype-%{version} -b 1 -a2
+%setup -q -n freetype-%{version} -a2 -a4
 
 pushd ft2demos-%{version}
 %patch0 -p0
