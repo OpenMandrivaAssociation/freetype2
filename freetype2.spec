@@ -3,7 +3,7 @@
 %{?_with_plf: %global build_plf 1}
 %{?_with_subpixel: %global build_subpixel 1}
 
-%define release %mkrel 1
+%define release %mkrel 2
 %if %build_plf
 %define distsuffix plf
 %if %mdvver >= 201100
@@ -16,7 +16,6 @@
 %define major	6
 %define libname	%mklibname freetype %{major}
 %define develname %mklibname -d freetype %{major}
-%define staticdevelname %mklibname -d -s freetype %{major}
 
 %define git_url git://git.sv.gnu.org/freetype/freetype2.git
 
@@ -38,7 +37,6 @@ Patch1:		freetype-2.4.2-CVE-2010-3311.patch
 BuildRequires:	zlib-devel
 BuildRequires:	pkgconfig
 BuildRequires:	libx11-devel
-Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 The FreeType2 engine is a free and portable TrueType font rendering engine.
@@ -72,7 +70,7 @@ is covered by software patents.
 %package -n %{develname}
 Summary:	Header files and static library for development with FreeType2
 Group:		Development/C
-Requires:	%{libname} = %{version}
+Requires:	%{libname} >= %{version}-%{release}
 Requires:	zlib-devel
 Obsoletes:	%{name}-devel
 Provides:	%{name}-devel = %{version}-%{release}
@@ -81,21 +79,6 @@ Provides:	%{name}-devel = %{version}-%{release}
 This package is only needed if you intend to develop or compile applications
 which rely on the FreeType2 library. If you simply want to run existing
 applications, you won't need this package.
-
-%package -n %{staticdevelname}
-Summary:	Static libraries for programs which will use the FreeType2 library
-Group:		Development/C
-Requires:	%{libname}-devel = %{version}
-Obsoletes:	%{name}-static-devel
-Provides:	%{name}-static-devel = %{version}-%{release}
-
-%description -n %{staticdevelname}
-This package includes the static libraries necessary for 
-developing programs which will use the FreeType2 library.
-
-If you are going to develop programs which use the FreeType2 library
-you should install freetype2-devel.  You'll also need to have the 
-freetype2 package installed.
 
 %package demos
 Summary:	A collection of FreeType demos
@@ -154,26 +137,16 @@ for ftdemo in ftbench ftdiff ftdump ftgamma ftgrid ftlint ftmulti ftstring ftval
     builds/unix/libtool --mode=install install -m 755 ft2demos-%{version}/bin/$ftdemo %{buildroot}%{_bindir}
 done
 
-%clean
-rm -fr %{buildroot}
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
+# cleanup
+rm -fr %{buildroot}%{_libdir}/*.*a
 
 %files -n %{libname}
-%defattr(-, root, root)
 %{_libdir}/*.so.%{major}*
 
 %files -n %{develname}
-%defattr(-, root, root)
 %doc docs/*
 %{_bindir}/freetype-config
 %{_libdir}/*.so
-%{_libdir}/*.la
 %dir %{_includedir}/freetype2
 %{_includedir}/freetype2/*
 %{_includedir}/ft2build.h
@@ -183,12 +156,7 @@ rm -fr %{buildroot}
 %dir %{multiarch_includedir}/freetype2
 %{multiarch_includedir}/freetype2/*
 
-%files -n %{staticdevelname}
-%defattr(-, root, root)
-%{_libdir}/*.a
-
 %files demos
-%defattr(-,root,root)
 %{_bindir}/ftbench
 %{_bindir}/ftdiff
 %{_bindir}/ftdump
