@@ -3,7 +3,7 @@
 %{?_with_plf: %global build_plf 1}
 %{?_with_subpixel: %global build_subpixel 1}
 
-%define release %mkrel 2
+%define release %mkrel 1
 %if %build_plf
 %define distsuffix plf
 %if %mdvver >= 201100
@@ -21,7 +21,7 @@
 
 Summary:	A free and portable TrueType font rendering engine
 Name:		freetype2
-Version:	2.4.8
+Version:	2.4.9
 Release:	%{release}%{?extrarelsuffix}
 License:	FreeType License/GPL
 Group:		System/Libraries
