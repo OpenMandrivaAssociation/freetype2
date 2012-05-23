@@ -3,7 +3,7 @@
 %{?_with_plf: %global build_plf 1}
 %{?_with_subpixel: %global build_subpixel 1}
 
-%define release %mkrel 1
+%define release %mkrel 2
 %if %build_plf
 %define distsuffix plf
 %if %mdvver >= 201100
