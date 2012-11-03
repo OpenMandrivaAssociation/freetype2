@@ -3,7 +3,7 @@
 %{?_with_plf: %global build_plf 1}
 %{?_with_subpixel: %global build_subpixel 1}
 
-%define release %mkrel 3
+%define release %mkrel 4
 %if %build_plf
 %define distsuffix plf
 %if %mdvver >= 201100
@@ -118,6 +118,10 @@ export CFLAGS="`echo %{optflags} |sed s/O2/O0/`"
 
 %configure2_5x \
 	--disable-static
+
+# (tpg) kill rpath
+sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' builds/unix/libtool
+sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' builds/unix/libtool
 
 %make
 
