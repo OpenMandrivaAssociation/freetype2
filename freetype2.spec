@@ -3,7 +3,7 @@
 %{?_with_plf: %global build_plf 1}
 %{?_with_subpixel: %global build_subpixel 1}
 
-%define release %mkrel 2
+%define release %mkrel 3
 %if %build_plf
 %define distsuffix plf
 %if %mdvver >= 201100
@@ -13,7 +13,7 @@
 %define build_subpixel 1
 %endif
 
-%define major	6
+%define major 6
 %define libname	%mklibname freetype %{major}
 %define develname %mklibname -d freetype %{major}
 
@@ -52,7 +52,7 @@ is covered by software patents.
 %package -n %{libname}
 Summary:	Shared libraries for a free and portable TrueType font rendering engine
 Group:		System/Libraries
-Obsoletes:	%{name}
+Obsoletes:	%{name} < %{version}-%{release}
 Provides:	%{name} = %{version}-%{release}
 
 %description -n %{libname}
@@ -60,7 +60,7 @@ The FreeType2 engine is a free and portable TrueType font rendering
 engine.  It has been developed to provide TT support to a great
 variety of platforms and environments. Note that FreeType2 is a
 library, not a stand-alone application, though some utility
-applications are included
+applications are included.
 %if %{build_plf}
 
 This package is in PLF because this build has subpixel hinting enabled which
@@ -72,7 +72,7 @@ Summary:	Header files and static library for development with FreeType2
 Group:		Development/C
 Requires:	%{libname} >= %{version}-%{release}
 Requires:	zlib-devel
-Obsoletes:	%{name}-devel
+Obsoletes:	%{name}-devel < %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n %{develname}
@@ -116,7 +116,9 @@ fi
 export CFLAGS="`echo %{optflags} |sed s/O2/O0/`"
 %endif
 
-%configure2_5x
+%configure2_5x \
+	--disable-static
+
 %make
 
 pushd ft2demos-%{version}
