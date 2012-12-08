@@ -1,7 +1,4 @@
 sources:
-  "freetype-2.4.10.tar.gz:"	44dba26ff965b1cd1c62e480fdefaeca62ed33da
-  "freetype-2.4.10.tar.gz.sig:"	3db23865cb9c189380895a76d221dcdcfb657736
-  "freetype-doc-2.4.10.tar.gz:"	c46cf5294e3f55458cb8e0eac81e413d72049d9c
-  "freetype-doc-2.4.10.tar.gz.sig:"	34ab256c6a0ff15d490fe9beaa8221eae76d8142
-  "ft2demos-2.4.10.tar.gz:"	2dbbe61beb8ed0adf8d2445f7d966b1e62306439
-  "ft2demos-2.4.10.tar.gz.sig:"	90ccc67a5b9399a94bb9a08ebeb3467d96b6c5f0
+  "freetype-2.4.10.tar.gz": 44dba26ff965b1cd1c62e480fdefaeca62ed33da
+  "freetype-doc-2.4.10.tar.gz": c46cf5294e3f55458cb8e0eac81e413d72049d9c
+  "ft2demos-2.4.10.tar.gz": 2dbbe61beb8ed0adf8d2445f7d966b1e62306439
