@@ -1,0 +1,3 @@
+The freetype2 package has been renamed to freetype.
+The old freetype package is now called freetype1 and
+moved off to contrib.
